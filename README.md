@@ -36,4 +36,7 @@ optional arguments:
   --show-missing, -m    show missed lines for changed files (default: False)
   --show-missing-full, -mf
                         show missed lines for --full-branches (default: False)
+  --fail-under PERCENT, -f PERCENT
+                        override minimum coverage percent (0 - disabled)
+                        (default: None)
 ```

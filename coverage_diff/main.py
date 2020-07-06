@@ -22,7 +22,12 @@ def get_changed_files(branch1: str, branch2: str, diff_filter: str, include_rege
     return list(files)
 
 
-def show_coverage(cov: Coverage, changed_files: Optional[bool] = None, show_missing: Optional[bool] = None) -> bool:
+def show_coverage(
+    cov: Coverage, 
+    changed_files: Optional[bool] = None, 
+    show_missing: Optional[bool] = None, 
+    fail_under: Optional[int] = None,
+) -> bool:
     """Print coverage for specified files"""
     try:
         coverage_value = cov.report(include=changed_files, show_missing=show_missing)
@@ -32,7 +37,8 @@ def show_coverage(cov: Coverage, changed_files: Optional[bool] = None, show_miss
             return True
         else:
             raise
-    return coverage_value >= cov.config.fail_under
+    minimum_coverage = fail_under if fail_under is not None else cov.config.fail_under
+    return coverage_value >= minimum_coverage
 
 
 def read_args():
@@ -47,6 +53,7 @@ def read_args():
     parser.add_argument('--full-branches', default='master', metavar='BRANCH', help='show full coverage for specified branches (delimited by comma)')
     parser.add_argument('--show-missing', '-m', action='store_true', help='show missed lines for changed files')
     parser.add_argument('--show-missing-full', '-mf', action='store_true', help='show missed lines for --full-branches')
+    parser.add_argument('--fail-under', '-f', type=int, metavar='PERCENT', help='override minimum coverage percent (0 - disabled)')
     args = parser.parse_args()
     args.full_branches = args.full_branches.split(',')
     return args
@@ -65,12 +72,12 @@ def main():
     cov.load()
 
     if args.branch1 in args.full_branches:
-        passed = show_coverage(cov, show_missing=args.show_missing_full)
+        passed = show_coverage(cov, show_missing=args.show_missing_full, fail_under=args.fail_under)
         exit_with_status(passed)
 
     changed_files = get_changed_files(args.branch1, args.branch2, args.diff_filter, args.include_regexp)
     if changed_files:
-        passed = show_coverage(cov, changed_files, show_missing=args.show_missing)
+        passed = show_coverage(cov, changed_files, show_missing=args.show_missing, fail_under=args.fail_under)
         exit_with_status(passed)
 
     print('No changes.')
