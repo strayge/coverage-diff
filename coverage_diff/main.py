@@ -54,6 +54,7 @@ def read_args():
     parser.add_argument('--show-missing', '-m', action='store_true', help='show missed lines for changed files')
     parser.add_argument('--show-missing-full', '-mf', action='store_true', help='show missed lines for --full-branches')
     parser.add_argument('--fail-under', '-f', type=int, metavar='PERCENT', help='override minimum coverage percent (0 - disabled)')
+    parser.add_argument('--current-branch', '-c', metavar='BRANCH', help='current branch name from CI (used for compare with --full-branches); if missed - will be used branch1')
     args = parser.parse_args()
     args.full_branches = args.full_branches.split(',')
     return args
@@ -71,7 +72,7 @@ def main():
     cov = Coverage()
     cov.load()
 
-    if args.branch1 in args.full_branches:
+    if (args.current_branch or args.branch1) in args.full_branches:
         passed = show_coverage(cov, show_missing=args.show_missing_full, fail_under=args.fail_under)
         exit_with_status(passed)
 
