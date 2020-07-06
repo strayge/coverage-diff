@@ -5,7 +5,7 @@ with open('README.md') as f:
 
 setup(
     name='coverage-diff',
-    version='0.0.2',
+    version='0.0.3',
     description='Show/check coverage only for changed files (between any git branches)',
     long_description=readme,
     author='strayge',
@@ -20,6 +20,7 @@ setup(
     },
     python_requires='>=3.6',
     install_requires=['coverage>=4'],
+    data_files = [('', ['LICENSE'])],
     classifiers=[
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
