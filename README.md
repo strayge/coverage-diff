@@ -39,4 +39,8 @@ optional arguments:
   --fail-under PERCENT, -f PERCENT
                         override minimum coverage percent (0 - disabled)
                         (default: None)
+  --current-branch BRANCH, -c BRANCH
+                        current branch name from CI (used for compare with
+                        --full-branches); if missed - will be used branch1
+                        (default: None)
 ```
