@@ -5,13 +5,13 @@ with open('README.md') as f:
 
 setup(
     name='coverage-diff',
-    version='0.0.5',
+    version='0.0.6',
     description='Show/check coverage only for changed files (between any git branches)',
     long_description=readme,
     author='strayge',
     author_email='strayge@gmail.com',
     long_description_content_type="text/markdown",
-    url="https://github.com/pypa/sampleproject",
+    url="https://github.com/strayge/coverage-diff",
     packages=find_packages(),
     entry_points={
         'console_scripts': [
