@@ -3,9 +3,10 @@ from invoke import run, task
 name = 'coverage-diff'
 src = 'coverage_diff'
 
+
 @task
 def isort(c):
-    run(f'isort {src} -rc')
+    run(f'isort {src}')
 
 
 @task
@@ -35,12 +36,13 @@ def upload_release(c):
 
 @task
 def install_test(c):
-    run(f'python -m pip install --index-url https://test.pypi.org/simple/ --no-deps {name}')
+    run(f'python -m pip install --index-url https://test.pypi.org/simple/ --no-deps --pre -U {name}')
 
 
 @task
 def install_release(c):
-    run(f'python -m pip install {name}')
+    run(f'python -m pip install -U {name}')
+
 
 @task
 def uninstall(c):
