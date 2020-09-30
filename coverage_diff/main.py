@@ -10,11 +10,11 @@ from coverage.misc import CoverageException
 def get_changed_files(branch1: str, branch2: str, diff_filter: str, include_regexp: str, use_fork_point: bool) -> List[str]:
     """Get changed files by specified diff types and filter with regexp."""
     if use_fork_point:
-        branch2_cmd = f'`git merge-base "{branch1}" "{branch2}"`'
+        branch1_cmd = f'`git merge-base "{branch1}" "{branch2}"`'
     else:
-        branch2_cmd = f'"{branch2}"'
+        branch1_cmd = f'"{branch1}"'
     r = subprocess.run(
-        f'git diff "{branch1}" {branch2_cmd} --name-only -b -M -C --diff-filter="{diff_filter}"',
+        f'git diff {branch1_cmd} "{branch2}" --name-only -b -M -C --diff-filter="{diff_filter}"',
         shell=True,
         capture_output=True,
     )
@@ -50,8 +50,8 @@ def read_args():
         description='Show coverage only for changed files',
         formatter_class=ArgumentDefaultsHelpFormatter,
     )
-    parser.add_argument('branch1', nargs='?', default='HEAD', help='first branch for git diff')
-    parser.add_argument('branch2', nargs='?', default='origin/master', help='second branch for git diff')
+    parser.add_argument('branch1', nargs='?', default='origin/master', help='first branch for git diff')
+    parser.add_argument('branch2', nargs='?', default='HEAD', help='second branch for git diff')
     parser.add_argument('--diff-filter', default='dr', metavar='DIFFS', help="diff types for include files for coverage (more info at git diff's --diff-filter option)")
     parser.add_argument('--include-regexp', default='\\.py$', metavar='REGEXP', help='filter changed files by regexp')
     parser.add_argument('--full-branches', default='master', metavar='BRANCH', help='show full coverage for specified branches (delimited by comma)')
@@ -59,7 +59,7 @@ def read_args():
     parser.add_argument('--show-missing-full', '-mf', action='store_true', help='show missed lines for --full-branches')
     parser.add_argument('--fail-under', '-f', type=int, metavar='PERCENT', help='override minimum coverage percent (0 - disabled)')
     parser.add_argument('--current-branch', '-c', metavar='BRANCH', help='current branch name from CI (used for compare with --full-branches); if missed - will be used branch1')
-    parser.add_argument('--fork-point', '-fp', action='store_true', help='compare branch1 with fork point from branch2 (instead of last commit at branch2)')
+    parser.add_argument('--fork-point', '-fp', action='store_true', help='compare branch2 with fork point from branch1 (instead of last commit at branch1)')
     args = parser.parse_args()
     args.full_branches = args.full_branches.split(',')
     return args

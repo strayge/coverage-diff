@@ -8,7 +8,7 @@ Show coverage for all changed files (except deleted & renamed)
 between current branch and master with numbers of missing lines.
 
 ```sh
-coverage-diff HEAD master --show-missing
+coverage-diff master HEAD --show-missing
 ```
 
 ### Options
@@ -21,8 +21,8 @@ usage: main.py [-h] [--diff-filter DIFFS] [--include-regexp REGEXP]
 Show coverage only for changed files
 
 positional arguments:
-  branch1               first branch for git diff (default: HEAD)
-  branch2               second branch for git diff (default: origin/master)
+  branch1               first branch for git diff (default: origin/master)
+  branch2               second branch for git diff (default: HEAD)
 
 optional arguments:
   -h, --help            show this help message and exit
