@@ -43,6 +43,6 @@ optional arguments:
                         current branch name from CI (used for compare with
                         --full-branches); if missed - will be used branch1
                         (default: None)
-  --fork-point, -fp     compare branch1 with fork point from branch2 (instead
-                        of last commit at branch2) (default: False)
+  --fork-point, -fp     compare branch2 with fork point from branch1 (instead
+                        of last commit at branch1) (default: False)
 ```
