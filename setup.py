@@ -5,7 +5,7 @@ with open('README.md') as f:
 
 setup(
     name='coverage-diff',
-    version='0.0.8',
+    version='0.0.9',
     description='Show/check coverage only for changed files (between any git branches)',
     long_description=readme,
     author='strayge',

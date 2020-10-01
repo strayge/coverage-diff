@@ -41,7 +41,7 @@ optional arguments:
                         (default: None)
   --current-branch BRANCH, -c BRANCH
                         current branch name from CI (used for compare with
-                        --full-branches); if missed - will be used branch1
+                        --full-branches); if missed - will be used branch2
                         (default: None)
   --fork-point, -fp     compare branch2 with fork point from branch1 (instead
                         of last commit at branch1) (default: False)
